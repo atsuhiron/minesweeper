@@ -59,7 +59,7 @@ namespace GameTests
         [Fact]
         public void GenNeighborMineNumMapTest()
         {
-            var mineMap = new List<IList<bool>>
+            var mineMap = new List<List<bool>>
             {
                 new List<bool> { false, false, true, true, false},
                 new List<bool> { true, false, false, true, false},
@@ -75,7 +75,7 @@ namespace GameTests
                 new List<int> { 0, 0, 1, 2, 2 },
             };
 
-            var actualNeigborMineNumMap = FieldUtil.GenNeighborMineNumMap(mineMap);
+            var actualNeigborMineNumMap = FieldUtil.GenNeighborMineNumMap((IReadOnlyList<IReadOnlyList<bool>>)mineMap);
 
             for (int iy = 0; iy < 4; iy++)
             {

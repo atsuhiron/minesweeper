@@ -35,7 +35,7 @@ namespace Game
             return isMineField;
         }
 
-        public static IReadOnlyList<IReadOnlyList<int>> GenNeighborMineNumMap(in IList<IList<bool>> isMineMap)
+        public static IReadOnlyList<IReadOnlyList<int>> GenNeighborMineNumMap(in IReadOnlyList<IReadOnlyList<bool>> isMineMap)
         {
             var sizeX = isMineMap[0].Count;
             var sizeY = isMineMap.Count;
