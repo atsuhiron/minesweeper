@@ -7,10 +7,10 @@ namespace Game
         Mine
     }
 
-    public enum ExplorationStatus
+    public enum CellStatus
     {
         Default,
-        NotExplored,
+        NotOpened,
         Cleared,
         Suspicious,
         Detonated
@@ -19,7 +19,7 @@ namespace Game
     public class FieldCell
     {
         public CellType CellType { get; init; }
-        public ExplorationStatus ExpStatus { get; set; }
+        public CellStatus CellStatus { get; set; }
         public int PosX { get; init; }
         public int PosY { get; init; }
         public int NeighborMineNum { get; init; }
@@ -27,29 +27,29 @@ namespace Game
         public FieldCell(CellType cellType, int posX, int posY, int neighborMineNum)
         {
             CellType = cellType;
-            ExpStatus = ExplorationStatus.NotExplored;
+            CellStatus = CellStatus.NotOpened;
             PosX = posX;
             PosY = posY;
             NeighborMineNum = neighborMineNum;
         } 
 
-        public ExplorationStatus TryExplore()
+        public CellStatus TryOpen()
         {
-            switch (ExpStatus)
+            switch (CellStatus)
             {
-                case ExplorationStatus.NotExplored:
+                case CellStatus.NotOpened:
                     if (CellType == CellType.Mine)
                     {
-                        ExpStatus = ExplorationStatus.Detonated;
-                        return ExplorationStatus.Detonated;
+                        CellStatus = CellStatus.Detonated;
+                        return CellStatus.Detonated;
                     }
                     else
                     {
-                        ExpStatus = ExplorationStatus.Cleared;
-                        return ExplorationStatus.Cleared;
+                        CellStatus = CellStatus.Cleared;
+                        return CellStatus.Cleared;
                     }
                 default:
-                    return ExpStatus;
+                    return CellStatus;
             }
         }
     }

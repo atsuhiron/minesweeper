@@ -85,5 +85,11 @@ namespace GameTests
                 }
             }
         }
+
+        [Fact]
+        public void TooManyMineTest()
+        {
+            var ex = Assert.Throws<ArgumentException>(() => FieldUtil.GenRandomMineMap(99999, 4, 6));
+        }
     }
 }
