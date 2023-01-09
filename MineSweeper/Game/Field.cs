@@ -106,7 +106,7 @@ namespace Game
             if (posX < 0) return false;
             if (posX >= SizeX) return false;
             if (posY < 0) return false;
-            if (posY >= SizeX) return false;
+            if (posY >= SizeY) return false;
 
             var cell = Cells[posY][posX];
             // danger status
