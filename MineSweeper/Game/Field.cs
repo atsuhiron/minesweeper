@@ -72,32 +72,44 @@ namespace Game
         public CellStatus Open(int posX, int posY)
         {
             var openStack = new List<FieldCell>() { Cells[posY][posX] };
+            return OpenCore(openStack);
+        }
 
-            while (openStack.Count > 0)
-            {
-                var cell = openStack.Last();
-                openStack.RemoveAt(openStack.Count - 1);
+        public CellStatus OpenAroundOf(int posX, int posY)
+        {
+            // Cannot open because center cell is not opened.
+            if (Cells[posY][posX].CellStatus != CellStatus.Cleared) return CellStatus.Default;
 
-                var st = cell.TryOpen();
-                if (st == CellStatus.Detonated)
-                {
-                    return CellStatus.Detonated;
-                }
+            var flaggedCount = 0;
+            if (IsFlagged(posX - 1, posY - 1)) flaggedCount++;
+            if (IsFlagged(posX + 0, posY - 1)) flaggedCount++;
+            if (IsFlagged(posX + 1, posY - 1)) flaggedCount++;
+            if (IsFlagged(posX - 1, posY + 0)) flaggedCount++;
+            if (IsFlagged(posX + 1, posY + 0)) flaggedCount++;
+            if (IsFlagged(posX - 1, posY + 1)) flaggedCount++;
+            if (IsFlagged(posX + 0, posY + 1)) flaggedCount++;
+            if (IsFlagged(posX + 1, posY + 1)) flaggedCount++;
 
-                if (cell.NeighborMineNum == 0)
-                {
-                    if (DecisionToAddToStack(cell.PosX - 1, cell.PosY)) openStack.Add(Cells[cell.PosY][cell.PosX - 1]);
-                    if (DecisionToAddToStack(cell.PosX + 1, cell.PosY)) openStack.Add(Cells[cell.PosY][cell.PosX + 1]);
-                    if (DecisionToAddToStack(cell.PosX, cell.PosY - 1)) openStack.Add(Cells[cell.PosY - 1][cell.PosX]);
-                    if (DecisionToAddToStack(cell.PosX, cell.PosY + 1)) openStack.Add(Cells[cell.PosY + 1][cell.PosX]);
-                }
-            }
-            return CellStatus.Cleared;
+            // Cannot open because the number of flag is insufficient.
+            if (flaggedCount != Cells[posY][posX].NeighborMineNum) return CellStatus.Default;
+
+            // Add to openStack if status is NotOpened.
+            var openStack = new List<FieldCell>();
+            if (CanAroundOpen(posX - 1, posY - 1)) openStack.Add(Cells[posY - 1][posX - 1]);
+            if (CanAroundOpen(posX + 0, posY - 1)) openStack.Add(Cells[posY - 1][posX + 0]);
+            if (CanAroundOpen(posX + 1, posY - 1)) openStack.Add(Cells[posY - 1][posX + 1]);
+            if (CanAroundOpen(posX - 1, posY + 0)) openStack.Add(Cells[posY + 0][posX - 1]);
+            if (CanAroundOpen(posX + 1, posY + 0)) openStack.Add(Cells[posY + 0][posX + 1]);
+            if (CanAroundOpen(posX - 1, posY + 1)) openStack.Add(Cells[posY + 1][posX - 1]);
+            if (CanAroundOpen(posX + 0, posY + 1)) openStack.Add(Cells[posY + 1][posX + 0]);
+            if (CanAroundOpen(posX + 1, posY + 1)) openStack.Add(Cells[posY + 1][posX + 1]);
+            return OpenCore(openStack);
         }
 
         public void SetStatus(int posX, int posY, CellStatus cellStatus)
         {
             Cells[posY][posX].CellStatus = cellStatus;
+            // TODO: Flagged だっと時の処理
         }
 
         public int CountHiddenMine()
@@ -128,18 +140,64 @@ namespace Game
             return true;
         }
 
-        private bool DecisionToAddToStack(int posX, int posY)
+        private bool IsInField(int posX, int posY)
         {
-            // out of field
             if (posX < 0) return false;
             if (posX >= SizeX) return false;
             if (posY < 0) return false;
             if (posY >= SizeY) return false;
+            return true;
+        }
+
+        private bool DecisionToAddToStack(int posX, int posY)
+        {
+            // out of field
+            if (! IsInField(posX, posY)) return false;
 
             var cell = Cells[posY][posX];
             // danger status
             if (cell.CellStatus != CellStatus.NotOpened) return false;
             return true;
+        }
+
+        private bool IsFlagged(int posX, int posY)
+        {
+            // out of field
+            if (!IsInField(posX, posY)) return false;
+
+            return Cells[posY][posX].CellStatus == CellStatus.Flagged;
+        }
+
+        private bool CanAroundOpen(int posX, int posY)
+        {
+            // out of field
+            if (!IsInField(posX, posY)) return false;
+
+            return Cells[posY][posX].CellStatus == CellStatus.NotOpened;
+        }
+
+        private CellStatus OpenCore(List<FieldCell> openStack)
+        {
+            while (openStack.Count > 0)
+            {
+                var cell = openStack.Last();
+                openStack.RemoveAt(openStack.Count - 1);
+
+                var st = cell.TryOpen();
+                if (st == CellStatus.Detonated)
+                {
+                    return CellStatus.Detonated;
+                }
+
+                if (cell.NeighborMineNum == 0)
+                {
+                    if (DecisionToAddToStack(cell.PosX - 1, cell.PosY)) openStack.Add(Cells[cell.PosY][cell.PosX - 1]);
+                    if (DecisionToAddToStack(cell.PosX + 1, cell.PosY)) openStack.Add(Cells[cell.PosY][cell.PosX + 1]);
+                    if (DecisionToAddToStack(cell.PosX, cell.PosY - 1)) openStack.Add(Cells[cell.PosY - 1][cell.PosX]);
+                    if (DecisionToAddToStack(cell.PosX, cell.PosY + 1)) openStack.Add(Cells[cell.PosY + 1][cell.PosX]);
+                }
+            }
+            return CellStatus.Cleared;
         }
     }
 }
