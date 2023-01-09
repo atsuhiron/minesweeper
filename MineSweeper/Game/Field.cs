@@ -100,6 +100,34 @@ namespace Game
             Cells[posY][posX].CellStatus = cellStatus;
         }
 
+        public int CountHiddenMine()
+        {
+            int hiddenMineNum = 0;
+            for (int iy = 0; iy < SizeY; iy++)
+            {
+                for (int ix = 0; ix < SizeX; ix++)
+                {
+                    if (Cells[iy][ix].CellType != CellType.Mine) continue;
+                    if (Cells[iy][ix].CellStatus == CellStatus.Flagged) continue;
+                    hiddenMineNum++;
+                }
+            }
+            return hiddenMineNum;
+        }
+
+        public bool IsEnd()
+        {
+            for (int iy = 0; iy < SizeY; iy++)
+            {
+                for (int ix = 0; ix < SizeX; ix++)
+                {
+                    if (Cells[iy][ix].CellType == CellType.Mine) continue;
+                    if (Cells[iy][ix].CellStatus != CellStatus.Cleared) return false;
+                }
+            }
+            return true;
+        }
+
         private bool DecisionToAddToStack(int posX, int posY)
         {
             // out of field

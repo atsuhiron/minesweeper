@@ -200,5 +200,152 @@ namespace GameTests
             Assert.Equal(CellStatus.Cleared, field.Cells[2][1].CellStatus);
             Assert.Equal(CellStatus.Cleared, field.Cells[2][2].CellStatus);
         }
+
+        [Fact]
+        public void CountHiddenMinetest1()
+        {
+            var mineMap = new List<List<bool>>
+            {
+                new List<bool>() { false, false, false },
+                new List<bool>() { false, false, false },
+                new List<bool>() { false, false, false }
+            };
+
+            var field = new Field(mineMap);
+            Assert.Equal(0, field.CountHiddenMine());
+
+            field.Open(1, 1);
+            Assert.Equal(0, field.CountHiddenMine());
+        }
+
+        [Fact]
+        public void CountHiddenMinetest2()
+        {
+            var mineMap = new List<List<bool>>
+            {
+                new List<bool>() { false, false, false },
+                new List<bool>() { true, false, false },
+                new List<bool>() { false, false, false }
+            };
+
+            var field = new Field(mineMap);
+            Assert.Equal(1, field.CountHiddenMine());
+
+            _ = field.Open(1, 1);
+            Assert.Equal(1, field.CountHiddenMine());
+
+            field.SetStatus(0, 1, CellStatus.Flagged);
+            Assert.Equal(0, field.CountHiddenMine());
+        }
+
+        [Fact]
+        public void CountHiddenMinetest3()
+        {
+            var mineMap = new List<List<bool>>
+            {
+                new List<bool>() { false, false, false },
+                new List<bool>() { true, false, true },
+                new List<bool>() { false, false, false }
+            };
+
+            var field = new Field(mineMap);
+            Assert.Equal(2, field.CountHiddenMine());
+
+            _ = field.Open(1, 1);
+            Assert.Equal(2, field.CountHiddenMine());
+
+            field.SetStatus(0, 1, CellStatus.Flagged);
+            field.SetStatus(2, 1, CellStatus.Suspicious);
+            Assert.Equal(1, field.CountHiddenMine());
+        }
+
+        [Fact]
+        public void IsEndTest1()
+        {
+            var mineMap = new List<List<bool>>
+            {
+                new List<bool>() { false, false, false },
+                new List<bool>() { false, false, false },
+                new List<bool>() { false, false, false }
+            };
+
+            var field = new Field(mineMap);
+            // * * *
+            // * * *
+            // * * *
+            Assert.False(field.IsEnd());
+            
+            _ = field.Open(0, 0);
+            // 0 0 0
+            // 0 0 0
+            // 0 0 0
+            Assert.True(field.IsEnd());
+        }
+
+        [Fact]
+        public void IsEndTest2()
+        {
+            var mineMap = new List<List<bool>>
+            {
+                new List<bool>() { true, false, false },
+                new List<bool>() { false, false, false },
+                new List<bool>() { false, false, false }
+            };
+
+            var field = new Field(mineMap);
+            // M * *
+            // * * *
+            // * * *
+            Assert.False(field.IsEnd());
+
+            _ = field.Open(1, 1);
+            // N N N
+            // N 1 N
+            // N N N
+            Assert.False(field.IsEnd());
+
+            _ = field.Open(2, 2);
+            // N 1 0
+            // 1 1 0
+            // 0 0 0
+            Assert.True(field.IsEnd());
+        }
+
+        [Fact]
+        public void IsEndTest3()
+        {
+            var mineMap = new List<List<bool>>
+            {
+                new List<bool>() { true, true, false },
+                new List<bool>() { false, false, false },
+                new List<bool>() { false, false, false }
+            };
+
+            var field = new Field(mineMap);
+            // M M *
+            // * * *
+            // * * *
+            field.SetStatus(0, 0, CellStatus.Flagged);
+            // F N N
+            // N N N
+            // N N N
+            field.SetStatus(1, 0, CellStatus.Suspicious);
+            // F S N
+            // N N N
+            // N N N
+            Assert.False(field.IsEnd());
+
+            _ = field.Open(2, 2);
+            // F S N
+            // 2 2 1
+            // 0 0 0
+            Assert.False(field.IsEnd());
+
+            _ = field.Open(2, 0);
+            // F S 1
+            // 2 2 1
+            // 0 0 0
+            Assert.True(field.IsEnd());
+        }
     }
 }
