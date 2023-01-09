@@ -11,12 +11,12 @@ namespace Game
         public int TotalMineNum { get; init; }
         public int HiddenMineNum { get; private set; }
 
-        public Field(int sizeX, int sizeY, int totalMineNum)
+        public Field(FieldParameter param)
         {
-            SizeX = sizeX;
-            SizeY = sizeY;
-            TotalMineNum = totalMineNum;
-            HiddenMineNum = totalMineNum;
+            SizeX = param.SizeX;
+            SizeY = param.SizeY;
+            TotalMineNum = param.TotalMineNum;
+            HiddenMineNum = param.TotalMineNum;
 
             var isMineMap = FieldUtil.GenRandomMineMap(TotalMineNum, SizeX, SizeY);
             var neighborMineNum = FieldUtil.GenNeighborMineNumMap(in isMineMap);
