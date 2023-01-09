@@ -12,6 +12,7 @@ namespace Game
         Default,
         NotOpened,
         Cleared,
+        Flagged,
         Suspicious,
         Detonated
     }

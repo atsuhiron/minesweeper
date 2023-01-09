@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace Game
 {
@@ -60,6 +61,51 @@ namespace Game
             Cells = _cells;
             TotalMineNum = _totalNum;
             HiddenMineNum = _totalNum;
+        }
+
+        public CellStatus Open(int posX, int posY)
+        {
+            var openStack = new List<FieldCell>() { Cells[posY][posX] };
+
+            while (openStack.Count > 0)
+            {
+                var cell = openStack.Last();
+                openStack.RemoveAt(openStack.Count - 1);
+
+                var st = cell.TryOpen();
+                if (st == CellStatus.Detonated)
+                {
+                    return CellStatus.Detonated;
+                }
+
+                if (cell.NeighborMineNum == 0)
+                {
+                    if (DecisionToAddToStack(cell.PosX - 1, cell.PosY)) openStack.Add(Cells[cell.PosY][cell.PosX - 1]);
+                    if (DecisionToAddToStack(cell.PosX + 1, cell.PosY)) openStack.Add(Cells[cell.PosY][cell.PosX + 1]);
+                    if (DecisionToAddToStack(cell.PosX, cell.PosY - 1)) openStack.Add(Cells[cell.PosY - 1][cell.PosX]);
+                    if (DecisionToAddToStack(cell.PosX, cell.PosY + 1)) openStack.Add(Cells[cell.PosY + 1][cell.PosX]);
+                }
+            }
+            return CellStatus.Cleared;
+        }
+
+        public void SetStatus(int posX, int posY, CellStatus cellStatus)
+        {
+            Cells[posY][posX].CellStatus = cellStatus;
+        }
+
+        private bool DecisionToAddToStack(int posX, int posY)
+        {
+            // out of field
+            if (posX < 0) return false;
+            if (posX >= SizeX) return false;
+            if (posY < 0) return false;
+            if (posY >= SizeX) return false;
+
+            var cell = Cells[posY][posX];
+            // danger status
+            if (cell.CellStatus != CellStatus.NotOpened) return false;
+            return true;
         }
     }
 }
