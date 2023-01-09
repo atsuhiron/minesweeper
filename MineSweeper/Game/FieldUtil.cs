@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Game
 {
-    public class FieldUtil
+    public static class FieldUtil
     {
         public static List<List<T>> GenZeroField<T>(int sizeX, int sizeY) where T : struct
         {

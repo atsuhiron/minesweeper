@@ -7,11 +7,11 @@
         Large
     }
 
-    public class FieldParameter
+    public record FieldParameter
     {
-        public int SizeX { get; set; }
-        public int SizeY { get; set; }
-        public int TotalMineNum { get; set; }
+        public int SizeX { get; init; }
+        public int SizeY { get; init; }
+        public int TotalMineNum { get; init; }
 
         public FieldParameter() { }
 

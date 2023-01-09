@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Game
@@ -13,6 +14,11 @@ namespace Game
 
         public Field(FieldParameter param)
         {
+            if (! param.IsValid())
+            {
+                throw new ArgumentException("Invalid field paramter");
+            }
+
             SizeX = param.SizeX;
             SizeY = param.SizeY;
             TotalMineNum = param.TotalMineNum;
