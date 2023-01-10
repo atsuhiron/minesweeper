@@ -9,6 +9,7 @@
 
     public record FieldParameter
     {
+        private const int MAX_SIZE = 100;
         public int SizeX { get; init; }
         public int SizeY { get; init; }
         public int TotalMineNum { get; init; }
@@ -24,7 +25,10 @@
 
         public bool IsValid()
         {
-            return SizeX > 0 && SizeY > 0 && TotalMineNum > 0;
+            if (SizeX <= 0 || SizeX > MAX_SIZE) return false;
+            if (SizeY <= 0 || SizeY > MAX_SIZE) return false;
+            if (TotalMineNum <= 0 || TotalMineNum > SizeX * SizeY) return false;
+            return true;
         }
 
         public static FieldParameter CreateFromPreset(FieldParameterPreset preset)
