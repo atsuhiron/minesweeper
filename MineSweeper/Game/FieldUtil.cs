@@ -12,11 +12,11 @@ namespace Game
         }
 
 
-        public static IReadOnlyList<IReadOnlyList<bool>> GenRandomMineMap(int num, int sizeX, int sizeY)
+        public static IReadOnlyList<IReadOnlyList<bool>> GenRandomMineMap(int num, int sizeX, int sizeY, int sanctuaryX, int sanctuaryY)
         {
-            if (num >= sizeX * sizeY)
+            if (num >= (sizeX * sizeY) - 1)
             {
-                throw new ArgumentException($"Too many mines. Cell num is {sizeX * sizeY}, but mine num is {num}.");
+                throw new ArgumentException($"Too many mines. Cell num is {sizeX * sizeY - 1}, but mine num is {num}.");
             }
 
             var rand = new Random();
@@ -29,6 +29,7 @@ namespace Game
                 var mineY = rand.Next(sizeY);
 
                 if (isMineField[mineY][mineX]) continue;
+                if ((mineX == sanctuaryX) && (mineY == sanctuaryY)) continue;
                 isMineField[mineY][mineX] = true;
                 count++;
             }

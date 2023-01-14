@@ -43,7 +43,7 @@ namespace GameTests
         {
             int sizeX = 5;
             int sizeY = 8;
-            var mineMap = FieldUtil.GenRandomMineMap(10, sizeX, sizeY);
+            var mineMap = FieldUtil.GenRandomMineMap(10, sizeX, sizeY, 0, 0);
 
             int totalNum = 0;
             for (int iy = 0; iy < sizeY; iy++)
@@ -89,7 +89,7 @@ namespace GameTests
         [Fact]
         public void TooManyMineTest()
         {
-            var ex = Assert.Throws<ArgumentException>(() => FieldUtil.GenRandomMineMap(99999, 4, 6));
+            var ex = Assert.Throws<ArgumentException>(() => FieldUtil.GenRandomMineMap(99999, 4, 6, 0, 0));
         }
     }
 }

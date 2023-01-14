@@ -12,7 +12,7 @@ namespace Game
         public int TotalMineNum { get; init; }
         public int HiddenMineNum { get; private set; }
 
-        public Field(FieldParameter param)
+        public Field(FieldParameter param, int startX, int startY)
         {
             if (! param.IsValid())
             {
@@ -24,7 +24,7 @@ namespace Game
             TotalMineNum = param.TotalMineNum;
             HiddenMineNum = param.TotalMineNum;
 
-            var isMineMap = FieldUtil.GenRandomMineMap(TotalMineNum, SizeX, SizeY);
+            var isMineMap = FieldUtil.GenRandomMineMap(TotalMineNum, SizeX, SizeY, startX, startY);
             var neighborMineNum = FieldUtil.GenNeighborMineNumMap(in isMineMap);
 
             var _cells = new List<IReadOnlyList<FieldCell>>();
