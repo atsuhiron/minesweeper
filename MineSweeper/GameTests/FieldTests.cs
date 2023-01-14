@@ -5,6 +5,22 @@ namespace GameTests
     public class FieldTests
     {
         [Fact]
+        public void InitializedTest()
+        {
+            var field = new Field();
+            Assert.Equal(0, field.CountHiddenMine());
+
+            var ex1 = Assert.Throws<ArgumentException>(() => field.Open(1, 1));
+            Assert.Contains("Not initilaized", ex1.Message);
+
+            var ex2 = Assert.Throws<ArgumentException>(() => field.OpenAroundOf(1, 1));
+            Assert.Contains("Not initilaized", ex2.Message);
+
+            var ex3 = Assert.Throws<ArgumentException>(() => field.SetStatus(1, 1, CellStatus.Cleared));
+            Assert.Contains("Not initilaized", ex3.Message);
+        }
+
+        [Fact]
         public void OpenPlaneFieldTest()
         {
             // * *

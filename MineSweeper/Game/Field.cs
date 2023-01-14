@@ -11,6 +11,17 @@ namespace Game
         public IReadOnlyList<IReadOnlyList<FieldCell>> Cells { get; init; }
         public int TotalMineNum { get; init; }
         public int HiddenMineNum { get; private set; }
+        private bool IsInitialized { get; set; }
+
+        public Field()
+        {
+            SizeX = 0;
+            SizeY = 0;
+            Cells = new List<IReadOnlyList<FieldCell>>();
+            TotalMineNum = 0;
+            HiddenMineNum = 0;
+            IsInitialized = false;
+        }
 
         public Field(FieldParameter param, int startX, int startY)
         {
@@ -40,6 +51,8 @@ namespace Game
                 _cells.Add(_cellLine);
             }
             Cells = _cells;
+            
+            IsInitialized = true;
         }
         
         public Field(IReadOnlyList<IReadOnlyList<bool>> isMineMap)
@@ -67,16 +80,27 @@ namespace Game
             Cells = _cells;
             TotalMineNum = _totalNum;
             HiddenMineNum = _totalNum;
+            IsInitialized = true;
         }
 
         public CellStatus Open(int posX, int posY)
         {
+            if (! IsInitialized)
+            {
+                throw new ArgumentException("Not initilaized");
+            }
+
             var openStack = new List<FieldCell>() { Cells[posY][posX] };
             return OpenCore(openStack);
         }
 
         public CellStatus OpenAroundOf(int posX, int posY)
         {
+            if (!IsInitialized)
+            {
+                throw new ArgumentException("Not initilaized");
+            }
+
             // Cannot open because center cell is not opened.
             if (Cells[posY][posX].CellStatus != CellStatus.Cleared) return CellStatus.Default;
 
@@ -108,6 +132,11 @@ namespace Game
 
         public void SetStatus(int posX, int posY, CellStatus cellStatus)
         {
+            if (!IsInitialized)
+            {
+                throw new ArgumentException("Not initilaized");
+            }
+
             Cells[posY][posX].CellStatus = cellStatus;
             // TODO: Flagged だっと時の処理
         }
@@ -129,6 +158,11 @@ namespace Game
 
         public bool IsEnd()
         {
+            if (!IsInitialized)
+            {
+                return false;
+            }
+
             for (int iy = 0; iy < SizeY; iy++)
             {
                 for (int ix = 0; ix < SizeX; ix++)

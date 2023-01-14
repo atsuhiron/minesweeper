@@ -90,6 +90,7 @@ namespace GameTests
         public void TooManyMineTest()
         {
             var ex = Assert.Throws<ArgumentException>(() => FieldUtil.GenRandomMineMap(99999, 4, 6, 0, 0));
+            Assert.Contains("Too many mines.", ex.Message);
         }
     }
 }
