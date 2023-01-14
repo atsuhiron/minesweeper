@@ -519,5 +519,33 @@ namespace GameTests
             // 0 0 0
             Assert.True(field.IsEnd());
         }
+
+        [Theory]
+        [InlineData(CellStatus.NotOpened, CellStatus.NotOpened, 0)]
+        [InlineData(CellStatus.NotOpened, CellStatus.Flagged, -1)]
+        [InlineData(CellStatus.NotOpened, CellStatus.Suspicious, 0)]
+        [InlineData(CellStatus.Flagged, CellStatus.NotOpened, 1)]
+        [InlineData(CellStatus.Flagged, CellStatus.Flagged, 0)]
+        [InlineData(CellStatus.Flagged, CellStatus.Suspicious, 1)]
+        [InlineData(CellStatus.Suspicious, CellStatus.NotOpened, 0)]
+        [InlineData(CellStatus.Suspicious, CellStatus.Flagged, -1)]
+        [InlineData(CellStatus.Suspicious, CellStatus.Suspicious, 0)]
+        public void CountHiddenMineNumDifferentialTest(CellStatus initStatus, CellStatus nextStatus, int diff)
+        {
+            var mineMap = new List<List<bool>>
+            {
+                new List<bool>() { true, true },
+                new List<bool>() { false, false }
+            };
+
+            var field = new Field(mineMap);
+            field.SetStatus(0, 0, initStatus);
+            var initHiddenNum = field.CountHiddenMine();
+
+            field.SetStatus(0, 0, nextStatus);
+            var nextHiddenNum = field.CountHiddenMine();
+
+            Assert.Equal(diff, nextHiddenNum - initHiddenNum);
+        }
     }
 }

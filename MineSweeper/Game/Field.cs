@@ -137,8 +137,15 @@ namespace Game
                 throw new ArgumentException("Not initilaized");
             }
 
-            Cells[posY][posX].CellStatus = cellStatus;
-            // TODO: Flagged だっと時の処理
+            if (Cells[posY][posX].CellStatus != CellStatus.Flagged && cellStatus == CellStatus.Flagged)
+            {
+                HiddenMineNum -= 1;
+            }
+            else if (Cells[posY][posX].CellStatus == CellStatus.Flagged && cellStatus != CellStatus.Flagged)
+            {
+                HiddenMineNum += 1;
+            }
+                Cells[posY][posX].CellStatus = cellStatus;
         }
 
         public int CountHiddenMine()
