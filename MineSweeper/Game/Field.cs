@@ -11,7 +11,7 @@ namespace Game
         public IReadOnlyList<IReadOnlyList<FieldCell>> Cells { get; init; }
         public int TotalMineNum { get; init; }
         public int HiddenMineNum { get; private set; }
-        private bool IsInitialized { get; set; }
+        public bool IsInitialized { get; private set; }
 
         public Field()
         {

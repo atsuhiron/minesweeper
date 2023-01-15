@@ -60,17 +60,37 @@ namespace MineSweeper.ViewModels
             {
                 mgrid.Children.Clear();
 
-                var sizeX = FieldParam.SizeX;
-                var sizeY = FieldParam.SizeY;
+                int sizeX;
+                int sizeY;
 
-                foreach (var y in Enumerable.Range(0, sizeY))
+                if (MineField.IsInitialized)
                 {
-                    foreach (var x in Enumerable.Range(0, sizeX))
+                    sizeX = FieldParam.SizeX;
+                    sizeY = FieldParam.SizeY;
+                    foreach (var y in Enumerable.Range(0, sizeY))
                     {
-                        var cell = CellDrawer.CreateCell(MineField.Cells[y][x]);
-                        mgrid.Children.Add(cell);
+                        foreach (var x in Enumerable.Range(0, sizeX))
+                        {
+                            var cell = CellRect.CreateCell(MineField.Cells[y][x]);
+                            mgrid.Children.Add(cell);
+                        }
                     }
                 }
+                else
+                {
+                    sizeX = FieldParam.SizeX;
+                    sizeY = FieldParam.SizeY;
+                    foreach (var y in Enumerable.Range(0, sizeY))
+                    {
+                        foreach (var x in Enumerable.Range(0, sizeX))
+                        {
+                            var cell = CellRect.CreateCell(new FieldCell(CellType.Plane, x, y, 0));
+                            mgrid.Children.Add(cell);
+                        }
+                    }
+                }
+
+                
                 mgrid.Width = Values.cellSize * sizeX;
                 mgrid.Height = Values.cellSize * sizeY;
             }

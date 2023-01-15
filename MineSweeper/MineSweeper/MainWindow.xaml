@@ -5,13 +5,25 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MineSweeper"
         xmlns:localVM="clr-namespace:MineSweeper.ViewModels"
+        xmlns:localConst="clr-namespace:MineSweeper"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Grid Height="auto" Width="auto" x:Name="MineFieldGrid">
+        <!--メインスクリーン-->
+        <Grid Height="auto" Width="auto" x:Name="MineFieldGrid" Background="WhiteSmoke">
             <Grid.DataContext>
                 <localVM:GameScreenViewModel/>
             </Grid.DataContext>
         </Grid>
+
+        <!-- メニュー -->
+        <Menu x:Name="menu" Height="20" VerticalAlignment="Top">
+            <MenuItem Header="{x:Static localConst:Strings.menu}">
+                <MenuItem.DataContext>
+                    <localVM:GameScreenViewModel/>
+                </MenuItem.DataContext>
+                <MenuItem Header="{x:Static localConst:Strings.newGame}" Command="{Binding DrawCommand}" CommandParameter="{Binding ElementName=MineFieldGrid}"/>
+            </MenuItem>
+        </Menu>
     </Grid>
 </Window>

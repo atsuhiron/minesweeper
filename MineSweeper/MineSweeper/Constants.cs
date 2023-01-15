@@ -8,5 +8,6 @@
     public class Strings
     {
         public const string menu = "メニュー";
+        public const string newGame = "ニューゲーム";
     }
 }
