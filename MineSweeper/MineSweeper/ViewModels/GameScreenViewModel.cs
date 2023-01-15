@@ -40,8 +40,6 @@ namespace MineSweeper.ViewModels
         }
 
         public DelegateCommand DrawCommand { get; init;}
-        public DelegateCommand OpenCommand { get; init; }
-        public DelegateCommand OpenAroundCommand { get; init; }
 
         public GameScreenViewModel()
         {
@@ -49,8 +47,6 @@ namespace MineSweeper.ViewModels
             _field = new Field();
 
             DrawCommand = new DelegateCommand(DrawCommandAction);
-            OpenCommand = new DelegateCommand(OpenAction);
-            OpenAroundCommand = new DelegateCommand(OpenAroundOfAction);
         }
 
         private void DrawCommandAction(object? parameter)
@@ -71,7 +67,7 @@ namespace MineSweeper.ViewModels
                     {
                         foreach (var x in Enumerable.Range(0, sizeX))
                         {
-                            var cell = CellRect.CreateCell(MineField.Cells[y][x]);
+                            var cell = CellRect.CreateCell(MineField.Cells[y][x], this);
                             mgrid.Children.Add(cell);
                         }
                     }
@@ -84,7 +80,7 @@ namespace MineSweeper.ViewModels
                     {
                         foreach (var x in Enumerable.Range(0, sizeX))
                         {
-                            var cell = CellRect.CreateCell(new FieldCell(CellType.Plane, x, y, 0));
+                            var cell = CellRect.CreateCell(new FieldCell(CellType.Plane, x, y, 0), this);
                             mgrid.Children.Add(cell);
                         }
                     }
@@ -96,22 +92,19 @@ namespace MineSweeper.ViewModels
             }
         }
 
-        private void OpenAction(object? parameter)
+        internal void InitField(int posX, int posY)
         {
-            // TODO: 座標を取得
-            var posX = 0;
-            var posY = 0;
+            MineField = new Field(FieldParam, posX, posY);
+        }
 
+        internal void OpenAction(int posX, int posY)
+        {
             var st = MineField.Open(posX, posY);
             // TODO: 起爆した時のメッセージ
         }
 
-        private void OpenAroundOfAction(object? parameter)
+        internal void OpenAroundOfAction(int posX, int posY)
         {
-            // TODO: 座標を取得
-            var posX = 0;
-            var posY = 0;
-
             var st = MineField.OpenAroundOf(posX, posY);
             // TODO: 起爆した時のメッセージ
         }
