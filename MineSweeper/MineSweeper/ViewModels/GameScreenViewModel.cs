@@ -133,15 +133,27 @@ namespace MineSweeper.ViewModels
             var sizeY = FieldParam.SizeY;
 
             var vmField = new List<List<FieldCellViewModel>>();
-            foreach (var y in Enumerable.Range(0, sizeY))
+            if (MineField.IsInitialized)
             {
-                var line = new List<FieldCellViewModel>();
-                foreach (var x in Enumerable.Range(0, sizeX))
+                foreach (var y in Enumerable.Range(0, sizeY))
                 {
-                    line.Add(new FieldCellViewModel(MineField.Cells[y][x], this));
+                    var line = new List<FieldCellViewModel>();
+                    foreach (var x in Enumerable.Range(0, sizeX))
+                    {
+                        line.Add(new FieldCellViewModel(MineField.Cells[y][x], this));
+                    }
+                    vmField.Add(line);
                 }
-                vmField.Add(line);
             }
+            else
+            {
+                foreach (var _ in Enumerable.Range(0, sizeY))
+                {
+                    var line = (Enumerable.Range(0, sizeX).Select(x => new FieldCellViewModel(this))).ToList();
+                    vmField.Add(line);
+                }
+            }
+            
             return vmField;
         }
 
