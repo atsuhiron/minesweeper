@@ -17,18 +17,16 @@ namespace MineSweeper.Views
             PosX = posX;
             PosY = posY;
             DataContext = fieldCellVM;
+            //this.CommandBindings.Add(new CommandBinding(fieldCellVM.OpenCommand));
         }
 
-        //protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
-        //{
-        //    base.OnMouseLeftButtonDown(e);
-        //    Background = new SolidColorBrush(Colors.WhiteSmoke);
-        //    if (!ViewModel.MineField.IsInitialized)
-        //    {
-        //        ViewModel.InitField(PosX, PosY);
-        //    }
-        //    ViewModel.OpenAction(PosX, PosY);
-        //}
+        protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
+        {
+            base.OnMouseLeftButtonDown(e);
+            if (!((FieldCellViewModel)DataContext).OpenCommand.CanExecute(null)) return;
+            Background = new SolidColorBrush(Colors.WhiteSmoke);
+            ((FieldCellViewModel)DataContext).OpenCommand.Execute(null);
+        }
 
 
         public static CellRect CreateCell(in FieldCell cell, in FieldCellViewModel fieldCellVM)
