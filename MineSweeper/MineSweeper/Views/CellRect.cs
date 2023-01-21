@@ -9,13 +9,11 @@ namespace MineSweeper.Views
 {
     public class CellRect : Grid
     {
-        //private GameScreenViewModel ViewModel { get; init; }
         private int PosX { get; init; }
         private int PosY { get; init; }
 
         public CellRect(in FieldCellViewModel fieldCellVM, int posX, int posY) : base()
         {
-            //ViewModel = vm;
             PosX = posX;
             PosY = posY;
             DataContext = fieldCellVM;

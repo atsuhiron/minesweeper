@@ -156,17 +156,5 @@ namespace MineSweeper.ViewModels
             
             return vmField;
         }
-
-        //internal void OpenAction(int posX, int posY)
-        //{
-        //    var st = MineField.Open(posX, posY);
-        //    // TODO: 起爆した時のメッセージ
-        //}
-
-        //internal void OpenAroundOfAction(int posX, int posY)
-        //{
-        //    var st = MineField.OpenAroundOf(posX, posY);
-        //    // TODO: 起爆した時のメッセージ
-        //}
     }
 }
