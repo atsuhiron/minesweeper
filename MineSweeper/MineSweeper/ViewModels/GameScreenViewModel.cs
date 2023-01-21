@@ -10,6 +10,7 @@ using Game;
 using MineSweeper.Commands;
 using System.Numerics;
 using System.Windows.Media.Media3D;
+using MineSweeper.Views;
 
 namespace MineSweeper.ViewModels
 {
@@ -17,13 +18,13 @@ namespace MineSweeper.ViewModels
     {
         public event PropertyChangedEventHandler? PropertyChanged;
 
-        private Field _field;
+        private Field _mineField;
         public Field MineField
         {
-            get { return _field; }
+            get { return _mineField; }
             set
             {
-                _field = value;
+                _mineField = value;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Field)));
             }
         }
@@ -41,12 +42,15 @@ namespace MineSweeper.ViewModels
 
         public DelegateCommand DrawCommand { get; init;}
 
+        private List<List<FieldCellViewModel>> FieldCellVMs { get; set; }
+
         public GameScreenViewModel()
         {
             _fieldParameter = FieldParameter.CreateFromPreset(FieldParameterPreset.Small);
-            _field = new Field();
+            _mineField = new Field();
 
             DrawCommand = new DelegateCommand(DrawCommandAction);
+            FieldCellVMs = GenFieldCellVMField();
         }
 
         private void DrawCommandAction(object? parameter)
@@ -67,7 +71,7 @@ namespace MineSweeper.ViewModels
                     {
                         foreach (var x in Enumerable.Range(0, sizeX))
                         {
-                            var cell = CellRect.CreateCell(MineField.Cells[y][x], this);
+                            var cell = CellRect.CreateCell(MineField.Cells[y][x], FieldCellVMs[y][x]);
                             mgrid.Children.Add(cell);
                         }
                     }
@@ -80,7 +84,7 @@ namespace MineSweeper.ViewModels
                     {
                         foreach (var x in Enumerable.Range(0, sizeX))
                         {
-                            var cell = CellRect.CreateCell(new FieldCell(CellType.Plane, x, y, 0), this);
+                            var cell = CellRect.CreateCell(new FieldCell(CellType.Plane, x, y, 0), FieldCellVMs[y][x]);
                             mgrid.Children.Add(cell);
                         }
                     }
@@ -92,21 +96,65 @@ namespace MineSweeper.ViewModels
             }
         }
 
-        internal void InitField(int posX, int posY)
+        private void InitField(int posX, int posY)
         {
             MineField = new Field(FieldParam, posX, posY);
         }
 
-        internal void OpenAction(int posX, int posY)
+        internal void OpenAction(FieldCell cell)
         {
+            int posX = cell.PosX;
+            int posY = cell.PosY;
+            if (!MineField.IsInitialized)
+            {
+                InitField(posX, posY);
+            }
+
             var st = MineField.Open(posX, posY);
             // TODO: 起爆した時のメッセージ
         }
 
-        internal void OpenAroundOfAction(int posX, int posY)
+        internal void OpenAroundOfAction(FieldCell cell)
         {
+            int posX = cell.PosX;
+            int posY = cell.PosY;
+            if (!MineField.IsInitialized)
+            {
+                InitField(posX, posY);
+            }
+
             var st = MineField.OpenAroundOf(posX, posY);
             // TODO: 起爆した時のメッセージ
         }
+
+        private List<List<FieldCellViewModel>> GenFieldCellVMField()
+        {
+            var sizeX = FieldParam.SizeX;
+            var sizeY = FieldParam.SizeY;
+
+            var vmField = new List<List<FieldCellViewModel>>();
+            foreach (var y in Enumerable.Range(0, sizeY))
+            {
+                var line = new List<FieldCellViewModel>();
+                foreach (var x in Enumerable.Range(0, sizeX))
+                {
+                    line.Add(new FieldCellViewModel(MineField.Cells[y][x], this));
+                }
+                vmField.Add(line);
+            }
+            return vmField;
+        }
+
+        //internal void OpenAction(int posX, int posY)
+        //{
+        //    var st = MineField.Open(posX, posY);
+        //    // TODO: 起爆した時のメッセージ
+        //}
+
+        //internal void OpenAroundOfAction(int posX, int posY)
+        //{
+        //    var st = MineField.OpenAroundOf(posX, posY);
+        //    // TODO: 起爆した時のメッセージ
+        //}
     }
 }
