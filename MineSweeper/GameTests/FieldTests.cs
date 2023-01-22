@@ -218,6 +218,67 @@ namespace GameTests
         }
 
         [Fact]
+        public void OpenIsolatedZeroFieldTest()
+        {
+            // M M M M M
+            // M * * * M
+            // M * * * M
+            // M * * * M
+            // M M M M M
+            //
+            // ↓ open (2, 2)
+            //
+            // N N N N N
+            // N 5 3 5 N
+            // N 3 0 5 N
+            // N 5 3 5 N
+            // N N N N N
+
+            var mineMap = new List<List<bool>>
+            {
+                new List<bool>() { true, true, true, true, true },
+                new List<bool>() { true, false, false, false, true },
+                new List<bool>() { true, false, false, false, true },
+                new List<bool>() { true, false, false, false, true, },
+                new List<bool>() { true, true, true, true, true }
+            };
+
+            var field = new Field(mineMap);
+            var st = field.Open(2, 2);
+
+            Assert.Equal(CellStatus.Cleared, st);
+            Assert.Equal(CellStatus.NotOpened, field.Cells[0][0].CellStatus);
+            Assert.Equal(CellStatus.NotOpened, field.Cells[0][1].CellStatus);
+            Assert.Equal(CellStatus.NotOpened, field.Cells[0][2].CellStatus);
+            Assert.Equal(CellStatus.NotOpened, field.Cells[0][3].CellStatus);
+            Assert.Equal(CellStatus.NotOpened, field.Cells[0][4].CellStatus);
+
+            Assert.Equal(CellStatus.NotOpened, field.Cells[1][0].CellStatus);
+            Assert.Equal(CellStatus.NotOpened, field.Cells[1][1].CellStatus);
+            Assert.Equal(CellStatus.Cleared, field.Cells[1][2].CellStatus);
+            Assert.Equal(CellStatus.NotOpened, field.Cells[1][3].CellStatus);
+            Assert.Equal(CellStatus.NotOpened, field.Cells[1][4].CellStatus);
+
+            Assert.Equal(CellStatus.NotOpened, field.Cells[2][0].CellStatus);
+            Assert.Equal(CellStatus.Cleared, field.Cells[2][1].CellStatus);
+            Assert.Equal(CellStatus.Cleared, field.Cells[2][2].CellStatus);
+            Assert.Equal(CellStatus.Cleared, field.Cells[2][3].CellStatus);
+            Assert.Equal(CellStatus.NotOpened, field.Cells[1][4].CellStatus);
+
+            Assert.Equal(CellStatus.NotOpened, field.Cells[3][0].CellStatus);
+            Assert.Equal(CellStatus.NotOpened, field.Cells[3][1].CellStatus);
+            Assert.Equal(CellStatus.Cleared, field.Cells[3][2].CellStatus);
+            Assert.Equal(CellStatus.NotOpened, field.Cells[3][3].CellStatus);
+            Assert.Equal(CellStatus.NotOpened, field.Cells[3][4].CellStatus);
+
+            Assert.Equal(CellStatus.NotOpened, field.Cells[4][0].CellStatus);
+            Assert.Equal(CellStatus.NotOpened, field.Cells[4][1].CellStatus);
+            Assert.Equal(CellStatus.NotOpened, field.Cells[4][2].CellStatus);
+            Assert.Equal(CellStatus.NotOpened, field.Cells[4][3].CellStatus);
+            Assert.Equal(CellStatus.NotOpened, field.Cells[4][4].CellStatus);
+        }
+
+        [Fact]
         public void OpenAroundOfNotOpnedTest()
         {
             // * * *
