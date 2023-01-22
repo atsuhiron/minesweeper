@@ -33,12 +33,17 @@ namespace MineSweeper.ViewModels
             OpenAroundOfCommand = new DelegateCommand(OpenAroundOfAction, CanOpenAroundOfCommand);
         }
 
-        public FieldCellViewModel(GameScreenViewModel screenViewModel)
+        public FieldCellViewModel(GameScreenViewModel screenViewModel, int posX, int posY)
         {
-            _fieldCell = new FieldCell(CellType.Default, 0, 0, 0);
+            _fieldCell = new FieldCell(CellType.Default, posX, posY, 0);
             ScreenViewModel = screenViewModel;
-            OpenCommand = new DelegateCommand((_) => { });
+            OpenCommand = new DelegateCommand((_) => { ScreenViewModel.OpenActionOnNotInitialized(posX, posY); });
             OpenAroundOfCommand = new DelegateCommand((_) => { });
+        }
+
+        public void CallDrawCommand(object? mgrid)
+        {
+            ScreenViewModel.DrawCommand.Execute(mgrid);
         }
 
         private bool CanOpenCommand(object? _)

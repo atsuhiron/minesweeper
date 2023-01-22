@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.ComponentModel;
 using System.Windows.Controls;
-using System.Runtime.CompilerServices;
 using Game;
 using MineSweeper.Commands;
-using System.Numerics;
-using System.Windows.Media.Media3D;
 using MineSweeper.Views;
 
 namespace MineSweeper.ViewModels
@@ -65,6 +59,7 @@ namespace MineSweeper.ViewModels
 
                 if (MineField.IsInitialized)
                 {
+                    FieldCellVMs = GenFieldCellVMField();
                     sizeX = FieldParam.SizeX;
                     sizeY = FieldParam.SizeY;
                     foreach (var y in Enumerable.Range(0, sizeY))
@@ -114,6 +109,12 @@ namespace MineSweeper.ViewModels
             // TODO: 起爆した時のメッセージ
         }
 
+        internal void OpenActionOnNotInitialized(int posX, int posY)
+        {
+            InitField(posX, posY);
+            var st = MineField.Open(posX, posY);
+        }
+
         internal void OpenAroundOfAction(FieldCell cell)
         {
             int posX = cell.PosX;
@@ -147,9 +148,13 @@ namespace MineSweeper.ViewModels
             }
             else
             {
-                foreach (var _ in Enumerable.Range(0, sizeY))
+                foreach (var y in Enumerable.Range(0, sizeY))
                 {
-                    var line = (Enumerable.Range(0, sizeX).Select(x => new FieldCellViewModel(this))).ToList();
+                    var line = new List<FieldCellViewModel>();
+                    foreach (var x in Enumerable.Range(0, sizeX))
+                    {
+                        line.Add(new FieldCellViewModel(this, x, y));
+                    }
                     vmField.Add(line);
                 }
             }

@@ -17,15 +17,17 @@ namespace MineSweeper.Views
             PosX = posX;
             PosY = posY;
             DataContext = fieldCellVM;
-            //this.CommandBindings.Add(new CommandBinding(fieldCellVM.OpenCommand));
         }
 
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
         {
             base.OnMouseLeftButtonDown(e);
-            if (!((FieldCellViewModel)DataContext).OpenCommand.CanExecute(null)) return;
+            if (DataContext is not FieldCellViewModel fieldCellVM) return;
             Background = new SolidColorBrush(Colors.WhiteSmoke);
-            ((FieldCellViewModel)DataContext).OpenCommand.Execute(null);
+
+            if (!fieldCellVM.OpenCommand.CanExecute(null)) return;
+            fieldCellVM.OpenCommand.Execute(null);
+            fieldCellVM.CallDrawCommand(base.Parent);
         }
 
 
