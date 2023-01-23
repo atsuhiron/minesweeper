@@ -232,10 +232,14 @@ namespace Game
 
                 if (cell.NeighborMineNum == 0)
                 {
-                    if (DecisionToAddToStack(cell.PosX - 1, cell.PosY)) openStack.Add(Cells[cell.PosY][cell.PosX - 1]);
-                    if (DecisionToAddToStack(cell.PosX + 1, cell.PosY)) openStack.Add(Cells[cell.PosY][cell.PosX + 1]);
-                    if (DecisionToAddToStack(cell.PosX, cell.PosY - 1)) openStack.Add(Cells[cell.PosY - 1][cell.PosX]);
-                    if (DecisionToAddToStack(cell.PosX, cell.PosY + 1)) openStack.Add(Cells[cell.PosY + 1][cell.PosX]);
+                    if (DecisionToAddToStack(cell.PosX - 1, cell.PosY - 1)) openStack.Add(Cells[cell.PosY - 1][cell.PosX - 1]);
+                    if (DecisionToAddToStack(cell.PosX + 0, cell.PosY - 1)) openStack.Add(Cells[cell.PosY - 1][cell.PosX + 0]);
+                    if (DecisionToAddToStack(cell.PosX + 1, cell.PosY - 1)) openStack.Add(Cells[cell.PosY - 1][cell.PosX + 1]);
+                    if (DecisionToAddToStack(cell.PosX - 1, cell.PosY + 0)) openStack.Add(Cells[cell.PosY + 0][cell.PosX - 1]);
+                    if (DecisionToAddToStack(cell.PosX + 1, cell.PosY + 0)) openStack.Add(Cells[cell.PosY + 0][cell.PosX + 1]);
+                    if (DecisionToAddToStack(cell.PosX - 1, cell.PosY + 1)) openStack.Add(Cells[cell.PosY + 1][cell.PosX - 1]);
+                    if (DecisionToAddToStack(cell.PosX + 0, cell.PosY + 1)) openStack.Add(Cells[cell.PosY + 1][cell.PosX + 0]);
+                    if (DecisionToAddToStack(cell.PosX + 1, cell.PosY + 1)) openStack.Add(Cells[cell.PosY + 1][cell.PosX + 1]);
                 }
             }
             return CellStatus.Cleared;
