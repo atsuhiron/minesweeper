@@ -22,7 +22,7 @@
                 <MenuItem.DataContext>
                     <localVM:GameScreenViewModel/>
                 </MenuItem.DataContext>
-                <MenuItem Header="{x:Static localConst:Strings.newGame}" Command="{Binding DrawCommand}" CommandParameter="{Binding ElementName=MineFieldGrid}"/>
+                <MenuItem Header="{x:Static localConst:Strings.newGame}" Command="{Binding RestartCommand}" CommandParameter="{Binding ElementName=MineFieldGrid}"/>
             </MenuItem>
         </Menu>
     </Grid>

@@ -35,6 +35,7 @@ namespace MineSweeper.ViewModels
         }
 
         public DelegateCommand DrawCommand { get; init;}
+        public DelegateCommand RestartCommand { get; init;}
 
         private List<List<FieldCellViewModel>> FieldCellVMs { get; set; }
 
@@ -44,6 +45,7 @@ namespace MineSweeper.ViewModels
             _mineField = new Field();
 
             DrawCommand = new DelegateCommand(DrawCommandAction);
+            RestartCommand = new DelegateCommand(RestartCommandAction);
             FieldCellVMs = GenFieldCellVMField();
         }
 
@@ -94,6 +96,12 @@ namespace MineSweeper.ViewModels
         private void InitField(int posX, int posY)
         {
             MineField = new Field(FieldParam, posX, posY);
+        }
+
+        private void RestartCommandAction(object? parameter)
+        {
+            MineField = new Field();
+            DrawCommandAction(parameter);
         }
 
         internal void OpenAction(FieldCell cell)
