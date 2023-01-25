@@ -34,6 +34,28 @@ namespace MineSweeper.ViewModels
             }
         }
 
+        private bool _isDetonated;
+        public bool IsDetonated
+        {
+            get { return _isDetonated; }
+            set
+            {
+                _isDetonated = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("IsDetonated"));
+            }
+        }
+
+        private bool _isAllCleared;
+        public bool IsAllCleared
+        {
+            get { return _isAllCleared; }
+            set
+            {
+                _isAllCleared = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("IsAllCleared"));
+            }
+        }
+
         public DelegateCommand DrawCommand { get; init;}
         public DelegateCommand RestartCommand { get; init;}
 
@@ -43,6 +65,8 @@ namespace MineSweeper.ViewModels
         {
             _fieldParameter = FieldParameter.CreateFromPreset(FieldParameterPreset.Small);
             _mineField = new Field();
+            _isDetonated = false;
+            _isAllCleared = false;
 
             DrawCommand = new DelegateCommand(DrawCommandAction);
             RestartCommand = new DelegateCommand(RestartCommandAction);
@@ -101,6 +125,8 @@ namespace MineSweeper.ViewModels
         private void RestartCommandAction(object? parameter)
         {
             MineField = new Field();
+            IsDetonated = false;
+            IsAllCleared = false;
             DrawCommandAction(parameter);
         }
 
@@ -114,7 +140,10 @@ namespace MineSweeper.ViewModels
             }
 
             var st = MineField.Open(posX, posY);
-            // TODO: 起爆した時のメッセージ
+            if (st == CellStatus.Detonated)
+            {
+                IsDetonated = true;
+            }
         }
 
         internal void OpenActionOnNotInitialized(int posX, int posY)
@@ -133,7 +162,10 @@ namespace MineSweeper.ViewModels
             }
 
             var st = MineField.OpenAroundOf(posX, posY);
-            // TODO: 起爆した時のメッセージ
+            if (st == CellStatus.Detonated)
+            {
+                IsDetonated = true;
+            }
         }
 
         private List<List<FieldCellViewModel>> GenFieldCellVMField()

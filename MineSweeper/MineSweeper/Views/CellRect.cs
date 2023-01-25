@@ -27,6 +27,7 @@ namespace MineSweeper.Views
 
             if (!fieldCellVM.OpenCommand.CanExecute(null)) return;
             fieldCellVM.OpenCommand.Execute(null);
+
             fieldCellVM.CallDrawCommand(base.Parent);
         }
 
@@ -39,24 +40,6 @@ namespace MineSweeper.Views
                 _ => new SolidColorBrush(Colors.White),
             };
 
-            string dispText;
-            if (cell.CellStatus == CellStatus.Cleared && cell.NeighborMineNum != 0)
-            {
-                dispText = cell.NeighborMineNum.ToString();
-            }
-            else
-            {
-                dispText = string.Empty;
-            }
-
-            var textBlock = new TextBlock
-            {
-                Text = dispText,
-                HorizontalAlignment = HorizontalAlignment.Center,
-                VerticalAlignment = VerticalAlignment.Center,
-                FontSize = 16
-            };
-
             var gridCell = new CellRect(fieldCellVM, cell.PosX, cell.PosY)
             {
                 Width = Values.cellSize - 2,
@@ -67,7 +50,26 @@ namespace MineSweeper.Views
                 VerticalAlignment = VerticalAlignment.Top,
                 Margin = new Thickness(Values.cellSize * cell.PosX, Values.cellSize * cell.PosY, 0, 0),
             };
-            gridCell.Children.Add(textBlock);
+
+            if (cell.CellStatus == CellStatus.Cleared && cell.NeighborMineNum != 0)
+            {
+                string dispText = cell.NeighborMineNum.ToString();
+                var textBlock = new TextBlock
+                {
+                    Text = dispText,
+                    HorizontalAlignment = HorizontalAlignment.Center,
+                    VerticalAlignment = VerticalAlignment.Center,
+                    FontSize = 16
+                };
+                gridCell.Children.Add(textBlock);
+            }
+            else if (cell.CellStatus == CellStatus.Detonated)
+            {
+                var img = Figures.GetDetonatedImg();
+                img.IsEnabled = true;
+                gridCell.Children.Add(img);
+            }
+
             return gridCell;
         }
     }

@@ -8,6 +8,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="fig\detonated.png" />
+    <None Remove="fig\flag.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="fig\detonated.png" />
+    <EmbeddedResource Include="fig\flag.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Game\Game.csproj" />
   </ItemGroup>
 
