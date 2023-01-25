@@ -197,7 +197,7 @@ namespace Game
 
             var cell = Cells[posY][posX];
             // danger status
-            if (cell.CellStatus != CellStatus.NotOpened) return false;
+            if (cell.CellStatus != CellStatus.Unopened) return false;
             return true;
         }
 
@@ -214,7 +214,7 @@ namespace Game
             // out of field
             if (!IsInField(posX, posY)) return false;
 
-            return Cells[posY][posX].CellStatus == CellStatus.NotOpened;
+            return Cells[posY][posX].CellStatus == CellStatus.Unopened;
         }
 
         private CellStatus OpenCore(List<FieldCell> openStack)

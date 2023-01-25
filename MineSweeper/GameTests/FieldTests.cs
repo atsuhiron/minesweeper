@@ -72,9 +72,9 @@ namespace GameTests
 
             Assert.Equal(CellStatus.Detonated, st);
             Assert.Equal(CellStatus.Detonated, field.Cells[0][0].CellStatus);
-            Assert.Equal(CellStatus.NotOpened, field.Cells[0][1].CellStatus);
-            Assert.Equal(CellStatus.NotOpened, field.Cells[1][0].CellStatus);
-            Assert.Equal(CellStatus.NotOpened, field.Cells[1][1].CellStatus);
+            Assert.Equal(CellStatus.Unopened, field.Cells[0][1].CellStatus);
+            Assert.Equal(CellStatus.Unopened, field.Cells[1][0].CellStatus);
+            Assert.Equal(CellStatus.Unopened, field.Cells[1][1].CellStatus);
         }
 
         [Fact]
@@ -98,9 +98,9 @@ namespace GameTests
             var st = field.Open(1, 1);
 
             Assert.Equal(CellStatus.Cleared, st);
-            Assert.Equal(CellStatus.NotOpened, field.Cells[0][0].CellStatus);
-            Assert.Equal(CellStatus.NotOpened, field.Cells[0][1].CellStatus);
-            Assert.Equal(CellStatus.NotOpened, field.Cells[1][0].CellStatus);
+            Assert.Equal(CellStatus.Unopened, field.Cells[0][0].CellStatus);
+            Assert.Equal(CellStatus.Unopened, field.Cells[0][1].CellStatus);
+            Assert.Equal(CellStatus.Unopened, field.Cells[1][0].CellStatus);
             Assert.Equal(CellStatus.Cleared, field.Cells[1][1].CellStatus);
         }
 
@@ -128,7 +128,7 @@ namespace GameTests
             var st = field.Open(2, 2);
 
             Assert.Equal(CellStatus.Cleared, st);
-            Assert.Equal(CellStatus.NotOpened, field.Cells[0][0].CellStatus);
+            Assert.Equal(CellStatus.Unopened, field.Cells[0][0].CellStatus);
             Assert.Equal(CellStatus.Cleared, field.Cells[0][1].CellStatus);
             Assert.Equal(CellStatus.Cleared, field.Cells[1][0].CellStatus);
             Assert.Equal(CellStatus.Cleared, field.Cells[1][1].CellStatus);
@@ -170,7 +170,7 @@ namespace GameTests
             var st = field.Open(2, 2);
 
             Assert.Equal(CellStatus.Cleared, st);
-            Assert.Equal(CellStatus.NotOpened, field.Cells[0][0].CellStatus);
+            Assert.Equal(CellStatus.Unopened, field.Cells[0][0].CellStatus);
             Assert.Equal(CellStatus.Cleared, field.Cells[0][1].CellStatus);
             Assert.Equal(CellStatus.Cleared, field.Cells[1][0].CellStatus);
             Assert.Equal(CellStatus.Cleared, field.Cells[1][1].CellStatus);
@@ -247,35 +247,35 @@ namespace GameTests
             var st = field.Open(2, 2);
 
             Assert.Equal(CellStatus.Cleared, st);
-            Assert.Equal(CellStatus.NotOpened, field.Cells[0][0].CellStatus);
-            Assert.Equal(CellStatus.NotOpened, field.Cells[0][1].CellStatus);
-            Assert.Equal(CellStatus.NotOpened, field.Cells[0][2].CellStatus);
-            Assert.Equal(CellStatus.NotOpened, field.Cells[0][3].CellStatus);
-            Assert.Equal(CellStatus.NotOpened, field.Cells[0][4].CellStatus);
+            Assert.Equal(CellStatus.Unopened, field.Cells[0][0].CellStatus);
+            Assert.Equal(CellStatus.Unopened, field.Cells[0][1].CellStatus);
+            Assert.Equal(CellStatus.Unopened, field.Cells[0][2].CellStatus);
+            Assert.Equal(CellStatus.Unopened, field.Cells[0][3].CellStatus);
+            Assert.Equal(CellStatus.Unopened, field.Cells[0][4].CellStatus);
 
-            Assert.Equal(CellStatus.NotOpened, field.Cells[1][0].CellStatus);
+            Assert.Equal(CellStatus.Unopened, field.Cells[1][0].CellStatus);
             Assert.Equal(CellStatus.Cleared, field.Cells[1][1].CellStatus);
             Assert.Equal(CellStatus.Cleared, field.Cells[1][2].CellStatus);
             Assert.Equal(CellStatus.Cleared, field.Cells[1][3].CellStatus);
-            Assert.Equal(CellStatus.NotOpened, field.Cells[1][4].CellStatus);
+            Assert.Equal(CellStatus.Unopened, field.Cells[1][4].CellStatus);
 
-            Assert.Equal(CellStatus.NotOpened, field.Cells[2][0].CellStatus);
+            Assert.Equal(CellStatus.Unopened, field.Cells[2][0].CellStatus);
             Assert.Equal(CellStatus.Cleared, field.Cells[2][1].CellStatus);
             Assert.Equal(CellStatus.Cleared, field.Cells[2][2].CellStatus);
             Assert.Equal(CellStatus.Cleared, field.Cells[2][3].CellStatus);
-            Assert.Equal(CellStatus.NotOpened, field.Cells[1][4].CellStatus);
+            Assert.Equal(CellStatus.Unopened, field.Cells[1][4].CellStatus);
 
-            Assert.Equal(CellStatus.NotOpened, field.Cells[3][0].CellStatus);
+            Assert.Equal(CellStatus.Unopened, field.Cells[3][0].CellStatus);
             Assert.Equal(CellStatus.Cleared, field.Cells[3][1].CellStatus);
             Assert.Equal(CellStatus.Cleared, field.Cells[3][2].CellStatus);
             Assert.Equal(CellStatus.Cleared, field.Cells[3][3].CellStatus);
-            Assert.Equal(CellStatus.NotOpened, field.Cells[3][4].CellStatus);
+            Assert.Equal(CellStatus.Unopened, field.Cells[3][4].CellStatus);
 
-            Assert.Equal(CellStatus.NotOpened, field.Cells[4][0].CellStatus);
-            Assert.Equal(CellStatus.NotOpened, field.Cells[4][1].CellStatus);
-            Assert.Equal(CellStatus.NotOpened, field.Cells[4][2].CellStatus);
-            Assert.Equal(CellStatus.NotOpened, field.Cells[4][3].CellStatus);
-            Assert.Equal(CellStatus.NotOpened, field.Cells[4][4].CellStatus);
+            Assert.Equal(CellStatus.Unopened, field.Cells[4][0].CellStatus);
+            Assert.Equal(CellStatus.Unopened, field.Cells[4][1].CellStatus);
+            Assert.Equal(CellStatus.Unopened, field.Cells[4][2].CellStatus);
+            Assert.Equal(CellStatus.Unopened, field.Cells[4][3].CellStatus);
+            Assert.Equal(CellStatus.Unopened, field.Cells[4][4].CellStatus);
         }
 
         [Fact]
@@ -302,15 +302,15 @@ namespace GameTests
 
             var st = field.OpenAroundOf(0, 2);
             Assert.Equal(CellStatus.Default, st);
-            Assert.Equal(CellStatus.NotOpened, field.Cells[0][0].CellStatus);
-            Assert.Equal(CellStatus.NotOpened, field.Cells[0][1].CellStatus);
-            Assert.Equal(CellStatus.NotOpened, field.Cells[0][2].CellStatus);
-            Assert.Equal(CellStatus.NotOpened, field.Cells[1][0].CellStatus);
-            Assert.Equal(CellStatus.NotOpened, field.Cells[1][1].CellStatus);
-            Assert.Equal(CellStatus.NotOpened, field.Cells[1][2].CellStatus);
-            Assert.Equal(CellStatus.NotOpened, field.Cells[2][0].CellStatus);
-            Assert.Equal(CellStatus.NotOpened, field.Cells[2][1].CellStatus);
-            Assert.Equal(CellStatus.NotOpened, field.Cells[2][2].CellStatus);
+            Assert.Equal(CellStatus.Unopened, field.Cells[0][0].CellStatus);
+            Assert.Equal(CellStatus.Unopened, field.Cells[0][1].CellStatus);
+            Assert.Equal(CellStatus.Unopened, field.Cells[0][2].CellStatus);
+            Assert.Equal(CellStatus.Unopened, field.Cells[1][0].CellStatus);
+            Assert.Equal(CellStatus.Unopened, field.Cells[1][1].CellStatus);
+            Assert.Equal(CellStatus.Unopened, field.Cells[1][2].CellStatus);
+            Assert.Equal(CellStatus.Unopened, field.Cells[2][0].CellStatus);
+            Assert.Equal(CellStatus.Unopened, field.Cells[2][1].CellStatus);
+            Assert.Equal(CellStatus.Unopened, field.Cells[2][2].CellStatus);
         }
 
         [Fact]
@@ -344,15 +344,15 @@ namespace GameTests
 
             var st = field.OpenAroundOf(0, 2);
             Assert.Equal(CellStatus.Default, st);
-            Assert.Equal(CellStatus.NotOpened, field.Cells[0][0].CellStatus);
-            Assert.Equal(CellStatus.NotOpened, field.Cells[0][1].CellStatus);
-            Assert.Equal(CellStatus.NotOpened, field.Cells[0][2].CellStatus);
-            Assert.Equal(CellStatus.NotOpened, field.Cells[1][0].CellStatus);
-            Assert.Equal(CellStatus.NotOpened, field.Cells[1][1].CellStatus);
-            Assert.Equal(CellStatus.NotOpened, field.Cells[1][2].CellStatus);
+            Assert.Equal(CellStatus.Unopened, field.Cells[0][0].CellStatus);
+            Assert.Equal(CellStatus.Unopened, field.Cells[0][1].CellStatus);
+            Assert.Equal(CellStatus.Unopened, field.Cells[0][2].CellStatus);
+            Assert.Equal(CellStatus.Unopened, field.Cells[1][0].CellStatus);
+            Assert.Equal(CellStatus.Unopened, field.Cells[1][1].CellStatus);
+            Assert.Equal(CellStatus.Unopened, field.Cells[1][2].CellStatus);
             Assert.Equal(CellStatus.Cleared, field.Cells[2][0].CellStatus);
-            Assert.Equal(CellStatus.NotOpened, field.Cells[2][1].CellStatus);
-            Assert.Equal(CellStatus.NotOpened, field.Cells[2][2].CellStatus);
+            Assert.Equal(CellStatus.Unopened, field.Cells[2][1].CellStatus);
+            Assert.Equal(CellStatus.Unopened, field.Cells[2][2].CellStatus);
         }
 
         [Fact]
@@ -387,15 +387,15 @@ namespace GameTests
 
             var st = field.OpenAroundOf(0, 2);
             Assert.Equal(CellStatus.Cleared, st);
-            Assert.Equal(CellStatus.NotOpened, field.Cells[0][0].CellStatus);
-            Assert.Equal(CellStatus.NotOpened, field.Cells[0][1].CellStatus);
-            Assert.Equal(CellStatus.NotOpened, field.Cells[0][2].CellStatus);
+            Assert.Equal(CellStatus.Unopened, field.Cells[0][0].CellStatus);
+            Assert.Equal(CellStatus.Unopened, field.Cells[0][1].CellStatus);
+            Assert.Equal(CellStatus.Unopened, field.Cells[0][2].CellStatus);
             Assert.Equal(CellStatus.Flagged, field.Cells[1][0].CellStatus);
             Assert.Equal(CellStatus.Cleared, field.Cells[1][1].CellStatus);
-            Assert.Equal(CellStatus.NotOpened, field.Cells[1][2].CellStatus);
+            Assert.Equal(CellStatus.Unopened, field.Cells[1][2].CellStatus);
             Assert.Equal(CellStatus.Cleared, field.Cells[2][0].CellStatus);
             Assert.Equal(CellStatus.Cleared, field.Cells[2][1].CellStatus);
-            Assert.Equal(CellStatus.NotOpened, field.Cells[2][2].CellStatus);
+            Assert.Equal(CellStatus.Unopened, field.Cells[2][2].CellStatus);
         }
 
         [Fact]
@@ -582,13 +582,13 @@ namespace GameTests
         }
 
         [Theory]
-        [InlineData(CellStatus.NotOpened, CellStatus.NotOpened, 0)]
-        [InlineData(CellStatus.NotOpened, CellStatus.Flagged, -1)]
-        [InlineData(CellStatus.NotOpened, CellStatus.Suspicious, 0)]
-        [InlineData(CellStatus.Flagged, CellStatus.NotOpened, 1)]
+        [InlineData(CellStatus.Unopened, CellStatus.Unopened, 0)]
+        [InlineData(CellStatus.Unopened, CellStatus.Flagged, -1)]
+        [InlineData(CellStatus.Unopened, CellStatus.Suspicious, 0)]
+        [InlineData(CellStatus.Flagged, CellStatus.Unopened, 1)]
         [InlineData(CellStatus.Flagged, CellStatus.Flagged, 0)]
         [InlineData(CellStatus.Flagged, CellStatus.Suspicious, 1)]
-        [InlineData(CellStatus.Suspicious, CellStatus.NotOpened, 0)]
+        [InlineData(CellStatus.Suspicious, CellStatus.Unopened, 0)]
         [InlineData(CellStatus.Suspicious, CellStatus.Flagged, -1)]
         [InlineData(CellStatus.Suspicious, CellStatus.Suspicious, 0)]
         public void CountHiddenMineNumDifferentialTest(CellStatus initStatus, CellStatus nextStatus, int diff)

@@ -10,7 +10,7 @@ namespace Game
     public enum CellStatus
     {
         Default,
-        NotOpened,
+        Unopened,
         Cleared,
         Flagged,
         Suspicious,
@@ -28,7 +28,7 @@ namespace Game
         public FieldCell(CellType cellType, int posX, int posY, int neighborMineNum)
         {
             CellType = cellType;
-            CellStatus = CellStatus.NotOpened;
+            CellStatus = CellStatus.Unopened;
             PosX = posX;
             PosY = posY;
             NeighborMineNum = neighborMineNum;
@@ -38,7 +38,7 @@ namespace Game
         {
             switch (CellStatus)
             {
-                case CellStatus.NotOpened:
+                case CellStatus.Unopened:
                     if (CellType == CellType.Mine)
                     {
                         CellStatus = CellStatus.Detonated;

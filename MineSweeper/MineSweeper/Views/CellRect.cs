@@ -35,7 +35,7 @@ namespace MineSweeper.Views
         {
             Brush cellColor = cell.CellStatus switch
             {
-                CellStatus.NotOpened => new SolidColorBrush(Colors.Gray),
+                CellStatus.Unopened => new SolidColorBrush(Colors.Gray),
                 _ => new SolidColorBrush(Colors.White),
             };
 

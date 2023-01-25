@@ -5,12 +5,12 @@ namespace GameTests
     public class FieldCellTests
     {
         [Theory]
-        [InlineData(CellType.Plane, CellStatus.NotOpened, CellStatus.Cleared)]
+        [InlineData(CellType.Plane, CellStatus.Unopened, CellStatus.Cleared)]
         [InlineData(CellType.Plane, CellStatus.Cleared, CellStatus.Cleared)]
         [InlineData(CellType.Plane, CellStatus.Flagged, CellStatus.Flagged)]
         [InlineData(CellType.Plane, CellStatus.Suspicious, CellStatus.Suspicious)]
         [InlineData(CellType.Plane, CellStatus.Detonated, CellStatus.Detonated)]
-        [InlineData(CellType.Mine, CellStatus.NotOpened, CellStatus.Detonated)]
+        [InlineData(CellType.Mine, CellStatus.Unopened, CellStatus.Detonated)]
         [InlineData(CellType.Mine, CellStatus.Cleared, CellStatus.Cleared)]
         [InlineData(CellType.Mine, CellStatus.Flagged, CellStatus.Flagged)]
         [InlineData(CellType.Mine, CellStatus.Suspicious, CellStatus.Suspicious)]
