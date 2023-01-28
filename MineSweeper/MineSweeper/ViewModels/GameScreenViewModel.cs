@@ -41,7 +41,7 @@ namespace MineSweeper.ViewModels
             set
             {
                 _isDetonated = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("IsDetonated"));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsDetonated)));
             }
         }
 
@@ -52,7 +52,7 @@ namespace MineSweeper.ViewModels
             set
             {
                 _isAllCleared = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("IsAllCleared"));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsAllCleared)));
             }
         }
 
