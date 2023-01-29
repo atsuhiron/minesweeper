@@ -3,11 +3,16 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:MineSweeper"
+        xmlns:localCvt="clr-namespace:MineSweeper.Converters"
         xmlns:localVM="clr-namespace:MineSweeper.ViewModels"
         xmlns:localConst="clr-namespace:MineSweeper"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+    <Window.Resources>
+        <localCvt:NewGameMenuConverter x:Key="NewGameMenuConverter"/>
+        <TextBlock Text="Small" x:Name="PresetSmall" x:Key="PresetSmall"/>
+    </Window.Resources>
+    
     <Grid>
         <!--メインスクリーン-->
         <Grid Height="auto" Width="auto" x:Name="MineFieldGrid" Background="WhiteSmoke">
@@ -22,7 +27,17 @@
                 <MenuItem.DataContext>
                     <localVM:GameScreenViewModel/>
                 </MenuItem.DataContext>
-                <MenuItem Header="{x:Static localConst:Strings.newGame}" Command="{Binding RestartCommand}" CommandParameter="{Binding ElementName=MineFieldGrid}"/>
+                <MenuItem Header="{x:Static localConst:Strings.newGameS}" Command="{Binding RestartCommand}" />
+                <MenuItem.CommandParameter>
+                    <MultiBinding Converter="{StaticResource ResourceKey=NewGameMenuConverter}">
+                        <MultiBinding.Bindings>
+                            <Binding ElementName="PresetSmall" Path="Text"/>
+                            <Binding ElementName="MineFieldGrid"/>
+                        </MultiBinding.Bindings>
+                    </MultiBinding>
+                </MenuItem.CommandParameter>
+                <MenuItem Header="{x:Static localConst:Strings.newGameM}" Command="{Binding RestartCommand}" CommandParameter="{Binding ElementName=MineFieldGrid}"/>
+                <MenuItem Header="{x:Static localConst:Strings.newGameL}" Command="{Binding RestartCommand}" CommandParameter="{Binding ElementName=MineFieldGrid}"/>
             </MenuItem>
         </Menu>
     </Grid>

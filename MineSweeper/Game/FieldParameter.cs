@@ -41,5 +41,16 @@
                 _ => new FieldParameter(10, 10, 10),
             };
         }
+
+        public static FieldParameterPreset ParsePresetFromString(string presetStr)
+        {
+            return presetStr switch
+            {
+                "Small" => FieldParameterPreset.Small,
+                "Medium" => FieldParameterPreset.Medium,
+                "Large" => FieldParameterPreset.Large,
+                _ => FieldParameterPreset.Small
+            };
+        }
     }
 }

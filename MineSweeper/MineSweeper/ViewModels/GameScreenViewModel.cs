@@ -5,6 +5,7 @@ using System.Windows.Controls;
 using Game;
 using MineSweeper.Commands;
 using MineSweeper.Views;
+using MineSweeper.Converters;
 
 namespace MineSweeper.ViewModels
 {
@@ -124,10 +125,13 @@ namespace MineSweeper.ViewModels
 
         private void RestartCommandAction(object? parameter)
         {
-            MineField = new Field();
-            IsDetonated = false;
-            IsAllCleared = false;
-            DrawCommandAction(parameter);
+            if (parameter is NewGameMenuComplex complex)
+            {
+                MineField = new Field();
+                IsDetonated = false;
+                IsAllCleared = false;
+                DrawCommandAction(complex.MineGrid);
+            }
         }
 
         internal void OpenAction(FieldCell cell)
