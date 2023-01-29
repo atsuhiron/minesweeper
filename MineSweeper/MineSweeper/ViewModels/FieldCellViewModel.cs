@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using Game;
 using MineSweeper.Commands;
 
@@ -24,6 +25,7 @@ namespace MineSweeper.ViewModels
 
         public DelegateCommand OpenCommand { get; init; }
         public DelegateCommand OpenAroundOfCommand { get; init; }
+        public DelegateCommand FlagCommand { get; init; }
 
         public FieldCellViewModel(FieldCell fieldCell, GameScreenViewModel screenViewModel)
         {
@@ -31,6 +33,7 @@ namespace MineSweeper.ViewModels
             ScreenViewModel = screenViewModel;
             OpenCommand = new DelegateCommand(OpenAction, CanOpenCommand);
             OpenAroundOfCommand = new DelegateCommand(OpenAroundOfAction, CanOpenAroundOfCommand);
+            FlagCommand = new DelegateCommand(FlagAction, CanFlagCommand);
         }
 
         public FieldCellViewModel(GameScreenViewModel screenViewModel, int posX, int posY)
@@ -39,6 +42,7 @@ namespace MineSweeper.ViewModels
             ScreenViewModel = screenViewModel;
             OpenCommand = new DelegateCommand((_) => { ScreenViewModel.OpenActionOnNotInitialized(posX, posY); });
             OpenAroundOfCommand = new DelegateCommand((_) => { });
+            FlagCommand = new DelegateCommand((_) => { });
         }
 
         public void CallDrawCommand(object? mgrid)
@@ -65,6 +69,24 @@ namespace MineSweeper.ViewModels
         private void OpenAroundOfAction(object? _)
         {
             ScreenViewModel.OpenAroundOfAction(FieldCell);
+        }
+
+        private bool CanFlagCommand(object? _)
+        {
+            return FieldCell.CellStatus switch
+            {
+                CellStatus.Unopened => true,
+                CellStatus.Flagged => true,
+                CellStatus.Suspicious => false, // とりあえず
+                CellStatus.Cleared => false,
+                CellStatus.Detonated => false,
+                _ => false
+            };
+        }
+
+        private void FlagAction(object? _)
+        {
+            ScreenViewModel.FlagAction(FieldCell);
         }
     }
 }

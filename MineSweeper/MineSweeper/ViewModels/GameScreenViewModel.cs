@@ -173,6 +173,21 @@ namespace MineSweeper.ViewModels
             }
         }
 
+        internal void FlagAction(FieldCell cell)
+        {
+            switch (cell.CellStatus)
+            {
+                case CellStatus.Flagged:
+                    cell.CellStatus = CellStatus.Unopened;
+                    break;
+                case CellStatus.Unopened:
+                    cell.CellStatus = CellStatus.Flagged;
+                    break;
+                default:
+                    break;
+            }
+        }
+
         private List<List<FieldCellViewModel>> GenFieldCellVMField()
         {
             var sizeX = FieldParam.SizeX;

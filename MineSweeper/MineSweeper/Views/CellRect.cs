@@ -31,6 +31,22 @@ namespace MineSweeper.Views
             fieldCellVM.CallDrawCommand(base.Parent);
         }
 
+        protected override void OnMouseRightButtonDown(MouseButtonEventArgs e)
+        {
+            base.OnMouseRightButtonDown(e);
+            if (DataContext is not FieldCellViewModel fieldCellVM) return;
+
+            if (fieldCellVM.OpenAroundOfCommand.CanExecute(null))
+            {
+                fieldCellVM.OpenAroundOfCommand.Execute(null);
+            }
+            else if (fieldCellVM.FlagCommand.CanExecute(null))
+            {
+                fieldCellVM.FlagCommand.Execute(null);
+            }
+            fieldCellVM.CallDrawCommand(base.Parent);
+        }
+
 
         public static CellRect CreateCell(in FieldCell cell, in FieldCellViewModel fieldCellVM)
         {
@@ -66,6 +82,12 @@ namespace MineSweeper.Views
             else if (cell.CellStatus == CellStatus.Detonated)
             {
                 var img = Figures.GetDetonatedImg();
+                img.IsEnabled = true;
+                gridCell.Children.Add(img);
+            }
+            else if (cell.CellStatus == CellStatus.Flagged)
+            {
+                var img = Figures.GetFlagImg();
                 img.IsEnabled = true;
                 gridCell.Children.Add(img);
             }
