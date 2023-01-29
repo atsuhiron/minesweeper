@@ -37,7 +37,7 @@
             {
                 FieldParameterPreset.Small => new FieldParameter(10, 10, 10),
                 FieldParameterPreset.Medium => new FieldParameter(15, 15, 24),
-                FieldParameterPreset.Large => new FieldParameter(15, 30, 50),
+                FieldParameterPreset.Large => new FieldParameter(30, 15, 50),
                 _ => new FieldParameter(10, 10, 10),
             };
         }
