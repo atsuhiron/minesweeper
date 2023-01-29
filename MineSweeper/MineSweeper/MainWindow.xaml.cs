@@ -20,6 +20,10 @@ namespace MineSweeper
     /// </summary>
     public partial class MainWindow : Window
     {
+        public static string PresetSmall => "Small";
+        public static string PresetMedium => "Medium";
+        public static string PresetLarge => "Large";
+
         public MainWindow()
         {
             InitializeComponent();

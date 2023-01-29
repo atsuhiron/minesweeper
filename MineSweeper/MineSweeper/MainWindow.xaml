@@ -7,10 +7,9 @@
         xmlns:localVM="clr-namespace:MineSweeper.ViewModels"
         xmlns:localConst="clr-namespace:MineSweeper"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800" Name="root">
     <Window.Resources>
         <localCvt:NewGameMenuConverter x:Key="NewGameMenuConverter"/>
-        <TextBlock Text="Small" x:Name="PresetSmall" x:Key="PresetSmall"/>
     </Window.Resources>
     
     <Grid>
@@ -27,17 +26,36 @@
                 <MenuItem.DataContext>
                     <localVM:GameScreenViewModel/>
                 </MenuItem.DataContext>
-                <MenuItem Header="{x:Static localConst:Strings.newGameS}" Command="{Binding RestartCommand}" />
-                <MenuItem.CommandParameter>
-                    <MultiBinding Converter="{StaticResource ResourceKey=NewGameMenuConverter}">
-                        <MultiBinding.Bindings>
-                            <Binding ElementName="PresetSmall" Path="Text"/>
-                            <Binding ElementName="MineFieldGrid"/>
-                        </MultiBinding.Bindings>
-                    </MultiBinding>
-                </MenuItem.CommandParameter>
-                <MenuItem Header="{x:Static localConst:Strings.newGameM}" Command="{Binding RestartCommand}" CommandParameter="{Binding ElementName=MineFieldGrid}"/>
-                <MenuItem Header="{x:Static localConst:Strings.newGameL}" Command="{Binding RestartCommand}" CommandParameter="{Binding ElementName=MineFieldGrid}"/>
+                <MenuItem Header="{x:Static localConst:Strings.newGameS}" Command="{Binding RestartCommand}">
+                    <MenuItem.CommandParameter>
+                        <MultiBinding Converter="{StaticResource NewGameMenuConverter}">
+                            <MultiBinding.Bindings>
+                                <Binding ElementName="root" Path="PresetSmall"/>
+                                <Binding ElementName="MineFieldGrid"/>
+                            </MultiBinding.Bindings>
+                        </MultiBinding>
+                    </MenuItem.CommandParameter>
+                </MenuItem>
+                <MenuItem Header="{x:Static localConst:Strings.newGameM}" Command="{Binding RestartCommand}">
+                    <MenuItem.CommandParameter>
+                        <MultiBinding Converter="{StaticResource NewGameMenuConverter}">
+                            <MultiBinding.Bindings>
+                                <Binding ElementName="root" Path="PresetMedium"/>
+                                <Binding ElementName="MineFieldGrid"/>
+                            </MultiBinding.Bindings>
+                        </MultiBinding>
+                    </MenuItem.CommandParameter>
+                </MenuItem>
+                <MenuItem Header="{x:Static localConst:Strings.newGameL}" Command="{Binding RestartCommand}">
+                    <MenuItem.CommandParameter>
+                        <MultiBinding Converter="{StaticResource NewGameMenuConverter}">
+                            <MultiBinding.Bindings>
+                                <Binding ElementName="root" Path="PresetLarge"/>
+                                <Binding ElementName="MineFieldGrid"/>
+                            </MultiBinding.Bindings>
+                        </MultiBinding>
+                    </MenuItem.CommandParameter>
+                </MenuItem>
             </MenuItem>
         </Menu>
     </Grid>

@@ -83,10 +83,10 @@ namespace MineSweeper.ViewModels
 
                 int sizeX;
                 int sizeY;
+                FieldCellVMs = GenFieldCellVMField();
 
                 if (MineField.IsInitialized)
                 {
-                    FieldCellVMs = GenFieldCellVMField();
                     sizeX = FieldParam.SizeX;
                     sizeY = FieldParam.SizeY;
                     foreach (var y in Enumerable.Range(0, sizeY))
@@ -130,6 +130,7 @@ namespace MineSweeper.ViewModels
                 MineField = new Field();
                 IsDetonated = false;
                 IsAllCleared = false;
+                FieldParam = FieldParameter.CreateFromPreset(complex.FieldParameterPreset);
                 DrawCommandAction(complex.MineGrid);
             }
         }
