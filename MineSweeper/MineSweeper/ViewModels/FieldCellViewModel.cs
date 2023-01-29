@@ -59,7 +59,7 @@ namespace MineSweeper.ViewModels
         private bool CanOpenAroundOfCommand(object? _)
         {
             // ほんとはもっと条件あるけど面倒なのと、Game 側で対処しているので、これだけ
-            return FieldCell.CellStatus == CellStatus.Unopened;
+            return FieldCell.CellStatus == CellStatus.Cleared;
         }
 
         private void OpenAroundOfAction(object? _)
