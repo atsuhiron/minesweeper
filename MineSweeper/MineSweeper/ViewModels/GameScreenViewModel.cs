@@ -64,7 +64,7 @@ namespace MineSweeper.ViewModels
             set
             {
                 _hiddenMineNum = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("HiddenMineNum"));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(HiddenMineNum)));
             }
         }
 
