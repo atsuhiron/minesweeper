@@ -13,8 +13,18 @@
     </Window.Resources>
     
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="auto" MinHeight="0"/>
+        </Grid.RowDefinitions>
+        <!--残り地雷数-->
+        <TextBlock Grid.Row="0" Width="auto" HorizontalAlignment="Right" VerticalAlignment="Bottom" FontSize="28" Text="{Binding HiddenMineNum, Mode=OneWay}">
+            <TextBlock.DataContext>
+                <localVM:GameScreenViewModel/>
+            </TextBlock.DataContext>
+        </TextBlock>
         <!--メインスクリーン-->
-        <Grid Height="auto" Width="auto" x:Name="MineFieldGrid" Background="WhiteSmoke">
+        <Grid Grid.Row="1"  Width="auto" x:Name="MineFieldGrid" Background="WhiteSmoke">
             <Grid.DataContext>
                 <localVM:GameScreenViewModel/>
             </Grid.DataContext>

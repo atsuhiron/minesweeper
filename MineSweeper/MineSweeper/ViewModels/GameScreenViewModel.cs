@@ -57,6 +57,17 @@ namespace MineSweeper.ViewModels
             }
         }
 
+        private int _hiddenMineNum;
+        public int HiddenMineNum
+        {
+            get { return _hiddenMineNum; }
+            set
+            {
+                _hiddenMineNum = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("HiddenMineNum"));
+            }
+        }
+
         public DelegateCommand DrawCommand { get; init;}
         public DelegateCommand RestartCommand { get; init;}
 
@@ -68,6 +79,7 @@ namespace MineSweeper.ViewModels
             _mineField = new Field();
             _isDetonated = false;
             _isAllCleared = false;
+            _hiddenMineNum = 0;
 
             DrawCommand = new DelegateCommand(DrawCommandAction);
             RestartCommand = new DelegateCommand(RestartCommandAction);
@@ -131,6 +143,7 @@ namespace MineSweeper.ViewModels
                 IsDetonated = false;
                 IsAllCleared = false;
                 FieldParam = FieldParameter.CreateFromPreset(complex.FieldParameterPreset);
+                HiddenMineNum = FieldParam.TotalMineNum;
                 DrawCommandAction(complex.MineGrid);
             }
         }
@@ -178,14 +191,15 @@ namespace MineSweeper.ViewModels
             switch (cell.CellStatus)
             {
                 case CellStatus.Flagged:
-                    cell.CellStatus = CellStatus.Unopened;
+                    MineField.SetStatus(cell.PosX, cell.PosY, CellStatus.Unopened);
                     break;
                 case CellStatus.Unopened:
-                    cell.CellStatus = CellStatus.Flagged;
+                    MineField.SetStatus(cell.PosX, cell.PosY, CellStatus.Flagged);
                     break;
                 default:
                     break;
             }
+            HiddenMineNum = MineField.HiddenMineNum;
         }
 
         private List<List<FieldCellViewModel>> GenFieldCellVMField()

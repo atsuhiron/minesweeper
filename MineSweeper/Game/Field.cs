@@ -145,7 +145,7 @@ namespace Game
             {
                 HiddenMineNum += 1;
             }
-                Cells[posY][posX].CellStatus = cellStatus;
+            Cells[posY][posX].CellStatus = cellStatus;
         }
 
         public int CountHiddenMine()
