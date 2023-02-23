@@ -13,29 +13,26 @@
     </Window.Resources>
     
     <Grid>
+        <!--グリッド設定-->
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
             <RowDefinition Height="auto" MinHeight="0"/>
         </Grid.RowDefinitions>
+        
+        <!--VMの指定-->
+        <Grid.DataContext>
+            <localVM:GameScreenViewModel/>
+        </Grid.DataContext>
+        
         <!--残り地雷数-->
-        <TextBlock Grid.Row="0" Width="auto" HorizontalAlignment="Right" VerticalAlignment="Bottom" FontSize="28" Text="{Binding HiddenMineNum, Mode=OneWay}">
-            <TextBlock.DataContext>
-                <localVM:GameScreenViewModel/>
-            </TextBlock.DataContext>
-        </TextBlock>
+        <TextBlock Grid.Row="0" Width="auto" HorizontalAlignment="Right" VerticalAlignment="Bottom" FontSize="28" Text="{Binding HiddenMineNum, Mode=OneWay}"></TextBlock>
+        
         <!--メインスクリーン-->
-        <Grid Grid.Row="1"  Width="auto" x:Name="MineFieldGrid" Background="WhiteSmoke">
-            <Grid.DataContext>
-                <localVM:GameScreenViewModel/>
-            </Grid.DataContext>
-        </Grid>
+        <Grid Grid.Row="1"  Width="auto" x:Name="MineFieldGrid" Background="WhiteSmoke"></Grid>
 
         <!-- メニュー -->
         <Menu x:Name="menu" Height="20" VerticalAlignment="Top">
             <MenuItem Header="{x:Static localConst:Strings.menu}">
-                <MenuItem.DataContext>
-                    <localVM:GameScreenViewModel/>
-                </MenuItem.DataContext>
                 <MenuItem Header="{x:Static localConst:Strings.newGameS}" Command="{Binding RestartCommand}">
                     <MenuItem.CommandParameter>
                         <MultiBinding Converter="{StaticResource NewGameMenuConverter}">
