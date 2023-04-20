@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Windows;
+using System.Collections.Generic;
 using System.Linq;
 using System.ComponentModel;
 using System.Windows.Controls;
@@ -128,6 +129,12 @@ namespace MineSweeper.ViewModels
                 mgrid.Width = Values.cellSize * sizeX;
                 mgrid.Height = Values.cellSize * sizeY;
             }
+
+
+            if (MineField.IsEnd())
+            {
+                ShowMessageBox("You win");
+            }
         }
 
         private void InitField(int posX, int posY)
@@ -234,6 +241,16 @@ namespace MineSweeper.ViewModels
             }
             
             return vmField;
+        }
+
+        private void ShowMessageBox(string msg)
+        {
+            string caption = "Game over";
+            MessageBoxButton button = MessageBoxButton.OK;
+            MessageBoxImage icon = MessageBoxImage.Information;
+            //MessageBoxResult result;
+
+            _ = MessageBox.Show(msg, caption, button, icon, MessageBoxResult.OK);
         }
     }
 }
